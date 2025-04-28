@@ -72,7 +72,7 @@ export default function AdminDashboard() {
         <div className="p-8">
           {renderContent()}
         </div>
-      </main>
+        </main>
     </div>
   );
 }
@@ -85,39 +85,39 @@ function Dashboard() {
           <div className="p-3 bg-blue-100 dark:bg-blue-900 rounded-lg">
             <PenTool className="w-6 h-6 text-blue-600 dark:text-blue-400" />
           </div>
-          <div>
+    <div>
             <p className="text-sm text-gray-500 dark:text-gray-400">Artículos Publicados</p>
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white">24</h3>
-          </div>
-        </div>
-      </div>
+              </div>
+              </div>
+            </div>
       <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm">
         <div className="flex items-center space-x-4">
           <div className="p-3 bg-purple-100 dark:bg-purple-900 rounded-lg">
             <Home className="w-6 h-6 text-purple-600 dark:text-purple-400" />
           </div>
-          <div>
+              <div>
             <p className="text-sm text-gray-500 dark:text-gray-400">Visitas Totales</p>
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white">4,256</h3>
-          </div>
-        </div>
-      </div>
+              </div>
+            </div>
+              </div>
       <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm">
         <div className="flex items-center space-x-4">
           <div className="p-3 bg-green-100 dark:bg-green-900 rounded-lg">
             <Calendar className="w-6 h-6 text-green-600 dark:text-green-400" />
-          </div>
-          <div>
+            </div>
+              <div>
             <p className="text-sm text-gray-500 dark:text-gray-400">Eventos Próximos</p>
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white">7</h3>
           </div>
         </div>
-      </div>
+            </div>
       <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm">
         <div className="flex items-center space-x-4">
           <div className="p-3 bg-amber-100 dark:bg-amber-900 rounded-lg">
             <BookOpen className="w-6 h-6 text-amber-600 dark:text-amber-400" />
-          </div>
+            </div>
           <div>
             <p className="text-sm text-gray-500 dark:text-gray-400">Boletines</p>
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white">12</h3>
@@ -144,28 +144,28 @@ function ArticlesManager({ articles }: { articles: Article[] }) {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Estado</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Fecha</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Vistas</th>
-              </tr>
-            </thead>
+            </tr>
+          </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              {articles.map((article) => (
-                <tr key={article.id}>
+            {articles.map((article) => (
+              <tr key={article.id}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">#{article.id}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{article.title}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`px-2 py-1 text-xs font-medium rounded-full ${
                       article.status === 'publicado' 
                         ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
                         : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
-                    }`}>
-                      {article.status}
-                    </span>
-                  </td>
+                  }`}>
+                    {article.status}
+                  </span>
+                </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{article.date}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{article.views}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+              </tr>
+            ))}
+          </tbody>
+        </table>
         </div>
       </div>
     </div>

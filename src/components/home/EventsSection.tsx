@@ -1,76 +1,33 @@
-import { Clock, Calendar, ArrowRight } from 'lucide-react';
+import { Event } from '../../types';
+import { Link } from 'react-router-dom';
 
-interface Event {
-  id: number;
-  title: string;
-  date: string;
-  time: string;
-  location: string;
-  category: string;
+interface EventsSectionProps {
+  events: Event[];
 }
 
-export const EventsSection = () => {
-  const events: Event[] = [
-    {
-      id: 1,
-      title: "Seminario de Investigación Avanzada",
-      date: "2025-04-24",
-      time: "15:00",
-      location: "Auditorio Principal",
-      category: "académico"
-    },
-    {
-      id: 2,
-      title: "Workshop de Innovación Tecnológica",
-      date: "2025-04-25",
-      time: "10:00",
-      location: "Sala de Conferencias A",
-      category: "tecnología"
-    }
-  ];
-
+export const EventsSection = ({ events }: EventsSectionProps) => {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden">
-      <div className="p-6">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-          Eventos Próximos
-        </h2>
-        <div className="space-y-6">
-          {events.map((event) => (
-            <div key={event.id} className="flex items-start space-x-4">
-              <div className="flex-shrink-0 w-14 text-center">
-                <div className="text-lg font-bold text-blue-600 dark:text-blue-400">
-                  {new Date(event.date).getDate()}
-                </div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">
-                  {new Date(event.date).toLocaleString('default', { month: 'short' }).toUpperCase()}
-                </div>
+    <section className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Próximos Eventos</h2>
+      <div className="space-y-6">
+        {events.map((event) => (
+          <article key={event.id} className="border-b border-gray-200 dark:border-gray-700 pb-6">
+            <Link to={`/eventos/${event.id}`} className="block">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">
+                {event.title}
+              </h3>
+              <p className="mt-2 text-gray-600 dark:text-gray-300">
+                {event.description.substring(0, 150)}...
+              </p>
+              <div className="mt-4 flex items-center text-sm text-gray-500 dark:text-gray-400">
+                <span>{new Date(event.date).toLocaleDateString()}</span>
+                <span className="mx-2">•</span>
+                <span>{event.location}</span>
               </div>
-              <div>
-                <h3 className="font-medium text-gray-900 dark:text-white">
-                  {event.title}
-                </h3>
-                <div className="mt-1 text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <div className="flex items-center">
-                    <Clock className="w-4 h-4 mr-1" />
-                    {event.time}
-                  </div>
-                  <div className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    {event.location}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+            </Link>
+          </article>
+        ))}
       </div>
-      <div className="px-6 py-4 bg-gray-50 dark:bg-gray-700/50">
-        <a href="/eventos" className="text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center">
-          Ver calendario completo
-          <ArrowRight className="ml-2 w-4 h-4" />
-        </a>
-      </div>
-    </div>
+    </section>
   );
 };

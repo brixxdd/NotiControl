@@ -1,105 +1,102 @@
-import { useState } from 'react'
-import type { ChangeEvent, FormEvent } from 'react'; // Import necessary types
-import { useEffect } from 'react'; // Import useEffect
+import { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
+import { useEffect } from 'react';
 
-// Define interface for bulletin data matching backend schema
-interface AdminBulletinItem {
-  _id?: string; // Optional _id for existing bulletins
-  folio: string; // Add folio
+// Define interface for trending topic data matching backend schema
+interface AdminTrendingItem {
+  _id?: string; // Optional _id for existing items
   title: string;
-  // description: string; // Remove description
-  date: string; // Use string for input type="date"
-  pdf?: string; // Add optional pdf URL
-  image?: string; // Add optional image URL
+  stats: string;
+  gradientFrom: string; // Store gradient start color name (e.g., "pink-500")
+  gradientTo: string;   // Store gradient end color name (e.g., "violet-500")
   createdAt?: string; // Add createdAt as optional from backend
 }
 
-export const AdminBulletins = () => {
+export const AdminTrending = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // State to hold new bulletin form data
-  const [newBulletin, setNewBulletin] = useState<AdminBulletinItem>({
-    folio: '', // Initialize folio
+  // State to hold new trending topic form data
+  const [newTrendingTopic, setNewTrendingTopic] = useState<AdminTrendingItem>({
     title: '',
-    // description: '',
-    date: '',
-    pdf: '', // Initialize pdf
-    image: '', // Initialize image
+    stats: '',
+    gradientFrom: '',
+    gradientTo: '',
   });
-  // State to hold the list of bulletins fetched from backend
-  const [bulletins, setBulletins] = useState<AdminBulletinItem[]>([]);
+  // State to hold the list of trending topics fetched from backend
+  const [trendingTopics, setTrendingTopics] = useState<AdminTrendingItem[]>([]);
   // State to track loading status
   const [loading, setLoading] = useState(true);
   // State for success message
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  // Function to fetch bulletins from the backend
-  const fetchBulletins = async () => {
+  // Function to fetch trending topics from the backend
+  const fetchTrendingTopics = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:5000/api/bulletins');
+      // NOTE: We will need to create the backend route for trending topics later
+      const response = await fetch('http://localhost:5000/api/trending');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const data: AdminBulletinItem[] = await response.json();
-      setBulletins(data);
+      const data: AdminTrendingItem[] = await response.json();
+      setTrendingTopics(data);
     } catch (error) {
-      console.error('Error fetching bulletins:', error);
+      console.error('Error fetching trending topics:', error);
       // Optionally set an error state here
     } finally {
       setLoading(false);
     }
   };
 
-  // Fetch bulletins when the component mounts
+  // Fetch trending topics when the component mounts
   useEffect(() => {
-    fetchBulletins();
+    fetchTrendingTopics();
   }, []); // Empty dependency array means this runs once on mount
 
   // Handle input changes
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setNewBulletin({ ...newBulletin, [name]: value });
+    setNewTrendingTopic({ ...newTrendingTopic, [name]: value });
   };
 
   // Handle form submission
-  const handleCreateBulletin = async (e: FormEvent) => {
+  const handleCreateTrendingTopic = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/api/bulletins', {
+      // NOTE: We will need to create the backend route for trending topics later
+      const response = await fetch('http://localhost:5000/api/trending', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newBulletin),
+        body: JSON.stringify(newTrendingTopic),
       });
 
       if (!response.ok) {
-        console.error('Error creating bulletin:', response.statusText);
+        console.error('Error creating trending topic:', response.statusText);
         // Handle error message if needed
       } else {
-        const createdBulletin = await response.json();
-        console.log('Boletín creado:', createdBulletin);
-        // Refresh the list of bulletins
-        fetchBulletins();
+        const createdTopic = await response.json();
+        console.log('Trending topic creado:', createdTopic);
+        // Refresh the list of trending topics
+        fetchTrendingTopics();
         // Show success message
-        setSuccessMessage('Boletín creado con éxito!');
+        setSuccessMessage('Trending topic creado con éxito!');
         // Hide success message after a few seconds
         setTimeout(() => {
           setSuccessMessage(null);
         }, 3000);
         // Close modal and reset form
         setIsModalOpen(false);
-        setNewBulletin({
-          folio: '',
+        setNewTrendingTopic({
           title: '',
-          date: '',
-          pdf: '',
-          image: '',
+          stats: '',
+          gradientFrom: '',
+          gradientTo: '',
         });
       }
     } catch (error) {
-      console.error('Error creating bulletin:', error);
+      console.error('Error creating trending topic:', error);
       // Handle network or other errors
     }
   };
@@ -107,12 +104,12 @@ export const AdminBulletins = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold dark:text-white">Gestionar Boletines</h1>
+        <h1 className="text-3xl font-bold dark:text-white">Gestionar Trending Topics</h1>
         <button
           onClick={() => setIsModalOpen(true)}
           className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
         >
-          Nuevo Boletín
+          Nuevo Trending Topic
         </button>
       </div>
 
@@ -127,69 +124,61 @@ export const AdminBulletins = () => {
         </div>
       )}
 
-      {/* Modal para crear boletín */}
+      {/* Modal para crear trending topic */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-md">
-            <h2 className="text-2xl font-bold mb-4 dark:text-white">Crear Nuevo Boletín</h2>
+            <h2 className="text-2xl font-bold mb-4 dark:text-white">Crear Nuevo Trending Topic</h2>
             {/* Formulario del modal */}
-            <form onSubmit={handleCreateBulletin} className="space-y-4">
-              <div>
-                <label htmlFor="folio" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Folio</label>
-                <input
-                  type="text"
-                  name="folio"
-                  id="folio"
-                  value={newBulletin.folio}
-                  onChange={handleInputChange}
-                  required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                />
-              </div>
+            <form onSubmit={handleCreateTrendingTopic} className="space-y-4">
               <div>
                 <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Título</label>
                 <input
                   type="text"
                   name="title"
                   id="title"
-                  value={newBulletin.title}
+                  value={newTrendingTopic.title}
                   onChange={handleInputChange}
                   required
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 />
               </div>
               <div>
-                <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Fecha</label>
+                <label htmlFor="stats" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Estadísticas</label>
                 <input
-                  type="date"
-                  name="date"
-                  id="date"
-                  value={newBulletin.date}
+                  type="text"
+                  name="stats"
+                  id="stats"
+                  value={newTrendingTopic.stats}
                   onChange={handleInputChange}
                   required
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 />
               </div>
-              <div>
-                <label htmlFor="pdf" className="block text-sm font-medium text-gray-700 dark:text-gray-300">URL del PDF (Opcional)</label>
+               <div>
+                <label htmlFor="gradientFrom" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Color Gradiente Inicio (Tailwind class)</label>
                 <input
-                  type="url"
-                  name="pdf"
-                  id="pdf"
-                  value={newBulletin.pdf}
+                  type="text"
+                  name="gradientFrom"
+                  id="gradientFrom"
+                  value={newTrendingTopic.gradientFrom}
                   onChange={handleInputChange}
+                  required
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  placeholder="Ej: pink-500"
                 />
               </div>
               <div>
-                <label htmlFor="image" className="block text-sm font-medium text-gray-700 dark:text-gray-300">URL de la Imagen (Opcional)</label>
+                <label htmlFor="gradientTo" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Color Gradiente Fin (Tailwind class)</label>
                 <input
-                  type="url"
-                  name="image"
-                  id="image"
-                  value={newBulletin.image}
+                  type="text"
+                  name="gradientTo"
+                  id="gradientTo"
+                  value={newTrendingTopic.gradientTo}
                   onChange={handleInputChange}
+                  required
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  placeholder="Ej: violet-500"
                 />
               </div>
               <div className="mt-6 flex justify-end space-x-3">
@@ -204,7 +193,7 @@ export const AdminBulletins = () => {
                   type="submit"
                   className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                 >
-                  Crear Boletín
+                  Crear Trending Topic
                 </button>
               </div>
             </form>
@@ -213,34 +202,27 @@ export const AdminBulletins = () => {
       )}
 
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <h2 className="text-lg font-semibold mb-4 dark:text-white">Lista de Boletines</h2>
-        {/* Aquí irá la lista/tabla de boletines cargados desde el backend */}
+        <h2 className="text-lg font-semibold mb-4 dark:text-white">Lista de Trending Topics</h2>
+        {/* Display the list of trending topics */}
         {loading ? (
-          <p className="text-center text-gray-600 dark:text-gray-400">Cargando boletines...</p>
-        ) : bulletins.length === 0 ? (
-          <p className="text-center text-gray-500 dark:text-gray-400">No hay boletines creados aún.</p>
+          <p className="text-center text-gray-600 dark:text-gray-400">Cargando trending topics...</p>
+        ) : trendingTopics.length === 0 ? (
+          <p className="text-center text-gray-500 dark:text-gray-400">No hay trending topics creados aún.</p>
         ) : (
           <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-            {bulletins.map((bulletin) => (
-              <li key={bulletin._id} className="py-4">
+            {trendingTopics.map((topic) => (
+              <li key={topic._id} className="py-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-lg font-medium text-gray-900 dark:text-white">{bulletin.folio} - {bulletin.title}</h3>
-                    {bulletin.pdf && (
-                      <p className="mt-1 text-sm text-blue-600 dark:text-blue-400">
-                        <a href={bulletin.pdf} target="_blank" rel="noopener noreferrer" className="hover:underline">Ver PDF</a>
-                      </p>
-                    )}
-                    {bulletin.image && (
-                      <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                        Imagen: {bulletin.image}
-                      </p>
-                    )}
-                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-500">
-                      Fecha: {bulletin.date}
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white">{topic.title}</h3>
+                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                      Estadísticas: {topic.stats}
+                    </p>
+                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                       Gradiente: from-{topic.gradientFrom} to-{topic.gradientTo}
                     </p>
                     <p className="mt-1 text-xs text-gray-500 dark:text-gray-500">
-                      Creado: {bulletin.createdAt ? new Date(bulletin.createdAt).toLocaleString() : 'N/A'}
+                       Creado: {topic.createdAt ? new Date(topic.createdAt).toLocaleString() : 'N/A'}
                     </p>
                   </div>
                   {/* Future: Edit/Delete buttons */}

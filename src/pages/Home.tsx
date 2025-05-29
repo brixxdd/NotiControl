@@ -17,6 +17,30 @@ interface FeaturedNewsItem extends Pick<NewsItemWithId, '_id' | 'id' | 'title' |
     featured: boolean; // Explicitly indicate it's featured
 }
 
+// Define interface for Event data matching backend schema (should match backend/models/Event.js)
+// Re-using a similar interface name for clarity in Home.tsx context
+interface HomeEventItem {
+  _id: string; // MongoDB _id
+  title: string;
+  date: string; // Backend might return date as string
+  time: string;
+  location: string;
+  category?: string; // Optional category
+  createdAt: string; // Date string from backend
+}
+
+// Define interface for Bulletin data matching backend schema (should match backend/models/Bulletin.js)
+interface HomeBulletinItem {
+  _id: string; // MongoDB _id
+  folio: string; // Add folio
+  title: string;
+  // description: string; // Remove description
+  date: string; // Backend might return date as string
+  pdf?: string; // Add optional pdf URL
+  image?: string; // Add optional image URL
+  createdAt: string; // Date string from backend
+}
+
 export const Home = () => {
   // State to hold all news fetched from backend (for NewsSection)
   const [news, setNews] = useState<NewsItemWithId[]>([]);
@@ -77,6 +101,59 @@ export const Home = () => {
     fetchNews();
   }, []); // This effect is specifically for the main news list
 
+  // State to hold all events fetched from backend (for EventsSection)
+  const [events, setEvents] = useState<HomeEventItem[]>([]);
+  // State to hold loading status for events section
+  const [eventsLoading, setEventsLoading] = useState(true);
+
+  // Fetch all events from backend on component mount for the EventsSection
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/events');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data: HomeEventItem[] = await response.json();
+        setEvents(data);
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      } finally {
+        setEventsLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []); // This effect is specifically for the events list
+
+  // State to hold all bulletins fetched from backend (for BulletinsSection)
+  const [bulletins, setBulletins] = useState<HomeBulletinItem[]>([]);
+  // State to hold loading status for bulletins section
+  const [bulletinsLoading, setBulletinsLoading] = useState(true);
+
+  // Fetch all bulletins from backend on component mount for the BulletinsSection
+  useEffect(() => {
+    const fetchBulletins = async () => {
+      try {
+        setBulletinsLoading(true);
+        const response = await fetch('http://localhost:5000/api/bulletins');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data: HomeBulletinItem[] = await response.json();
+        // Sort bulletins by date, newest first (optional, adjust as needed)
+        const sortedData = data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        setBulletins(sortedData);
+      } catch (error) {
+        console.error('Error fetching bulletins:', error);
+      } finally {
+        setBulletinsLoading(false);
+      }
+    };
+
+    fetchBulletins();
+  }, []); // This effect is specifically for the bulletins list
+
   // Note: The featuredNews state uses hardcoded data for the carousel for now.
   // In a real app, you might filter the fetched 'news' data or have a separate API endpoint for featured news.
 
@@ -99,14 +176,14 @@ export const Home = () => {
               <NewsSection news={news} />
             )}
             {/* Events Section - will need to fetch its own data */}
-            <EventsSection />
+            <EventsSection events={events} loading={eventsLoading} />
           </div>
 
           {/* Barra lateral */}
           <div className="space-y-8">
             <SocialSection />
             {/* Bulletins Section - will need to fetch data */}
-            <BulletinsSection />
+            <BulletinsSection bulletins={bulletins} loading={bulletinsLoading} />
           </div>
         </div>
       </section>

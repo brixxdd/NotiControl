@@ -18,9 +18,15 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Importar las rutas de noticias
 const newsRouter = require('./routes/news');
+const eventsRouter = require('./routes/events'); // Import events router
+const bulletinsRouter = require('./routes/bulletins'); // Import bulletins router
+const trendingRouter = require('./routes/trending'); // Import trending router
 
 // Usar las rutas de noticias para las solicitudes que empiecen con /api/news
 app.use('/api/news', newsRouter);
+app.use('/api/events', eventsRouter); // Use events router
+app.use('/api/bulletins', bulletinsRouter); // Use bulletins router
+app.use('/api/trending', trendingRouter); // Use trending router
 
 // Ejemplo de ruta básica (puedes borrarla o modificarla después):
 // app.get('/', (req, res) => {

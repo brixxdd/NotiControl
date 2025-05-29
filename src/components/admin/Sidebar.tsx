@@ -1,4 +1,4 @@
-import { Home, PenTool, Calendar, BookOpen, Image, Settings, LogOut, Menu, X } from 'lucide-react';
+import { Home, PenTool, Calendar, BookOpen, Image, Settings, LogOut, Menu, X, TrendingUp } from 'lucide-react';
 
 interface MenuItemProps {
   icon: React.ReactNode;
@@ -105,6 +105,13 @@ export const Sidebar = ({ isOpen, activeSection, onToggle, onSectionChange }: Si
           isCollapsed={!isOpen}
           isActive={activeSection === 'settings'}
           onClick={() => onSectionChange('settings')}
+        />
+        <MenuItem
+          icon={<TrendingUp size={24} />}
+          text="Trending"
+          isCollapsed={!isOpen}
+          isActive={activeSection === 'trending'}
+          onClick={() => onSectionChange('trending')}
         />
       </nav>
 

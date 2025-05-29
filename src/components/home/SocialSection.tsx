@@ -1,46 +1,44 @@
 import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
-interface TrendingTopic {
-  id: number;
+// Define interface for Trending Topic data matching backend schema
+interface TrendingTopicItem {
+  _id: string; // MongoDB _id
   title: string;
   stats: string;
-  gradient: {
-    from: string;
-    to: string;
-  };
+  gradientFrom: string;
+  gradientTo: string;
+  createdAt: string; // Assuming backend returns createdAt
 }
 
-const trendingTopics: TrendingTopic[] = [
-  {
-    id: 1,
-    title: "Semana Internacional de las Lenguas",
-    stats: "+2.5k estudiantes participando",
-    gradient: {
-      from: "pink-500",
-      to: "violet-500"
-    }
-  },
-  {
-    id: 2,
-    title: "Hackathon Multilingüe 2025",
-    stats: "48 horas de innovación",
-    gradient: {
-      from: "blue-500",
-      to: "cyan-500"
-    }
-  },
-  {
-    id: 3,
-    title: "Intercambio Cultural Virtual",
-    stats: "Conectando 15 países",
-    gradient: {
-      from: "amber-500",
-      to: "orange-500"
-    }
-  }
-];
-
 export const SocialSection = () => {
+  // State to hold trending topics fetched from backend
+  const [trendingTopics, setTrendingTopics] = useState<TrendingTopicItem[]>([]);
+  // State to track loading status
+  const [loading, setLoading] = useState(true);
+
+  // Fetch trending topics from backend on component mount
+  useEffect(() => {
+    const fetchTrendingTopics = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('http://localhost:5000/api/trending');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data: TrendingTopicItem[] = await response.json();
+        // Limit to first 3 topics for display in this section
+        setTrendingTopics(data.slice(0, 3));
+      } catch (error) {
+        console.error('Error fetching trending topics:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTrendingTopics();
+  }, []); // Empty dependency array means this runs once on mount
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
       {/* Trending Topics de la Semana */}
@@ -50,30 +48,41 @@ export const SocialSection = () => {
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
               Trending de la Semana
             </h2>
-            <span className="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-300 rounded-full animate-pulse">
-              EN VIVO
-            </span>
+            {/* Show EN VIVO badge only if not loading and there are topics */}
+            {!loading && trendingTopics.length > 0 && (
+               <span className="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-300 rounded-full animate-pulse">
+                 EN VIVO
+               </span>
+             )}
           </div>
-          <div className="space-y-4">
-            {trendingTopics.map((topic) => (
-              <div key={topic.id} className="relative group">
-                <div className={`absolute -inset-0.5 bg-gradient-to-r from-${topic.gradient.from} to-${topic.gradient.to} rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200`} />
-                <a href="#" className="relative block p-4 bg-white dark:bg-gray-900 rounded-lg hover:transform hover:scale-[1.01] transition-all">
-                  <div className="flex items-start gap-3">
-                    <span className={`flex-shrink-0 w-8 h-8 bg-gradient-to-br from-${topic.gradient.from} to-${topic.gradient.to} rounded-full flex items-center justify-center text-white font-bold text-sm`}>
-                      {topic.id}
-                    </span>
-                    <div>
-                      <h3 className="font-medium text-gray-900 dark:text-white">{topic.title}</h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                        {topic.stats}
-                      </p>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            ))}
-          </div>
+          {loading ? (
+             <p className="text-center text-gray-600 dark:text-gray-300">Cargando trending topics...</p>
+           ) : trendingTopics.length === 0 ? (
+             <p className="text-center text-gray-600 dark:text-gray-300">No hay trending topics disponibles.</p>
+           ) : (
+             <div className="space-y-4">
+               {trendingTopics.map((topic, index) => (
+                 <div key={topic._id} className="relative group">
+                   {/* Use gradientFrom and gradientTo from fetched data */}
+                   <div className={`absolute -inset-0.5 bg-gradient-to-r from-${topic.gradientFrom} to-${topic.gradientTo} rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200`} />
+                   <a href="#" className="relative block p-4 bg-white dark:bg-gray-900 rounded-lg hover:transform hover:scale-[1.01] transition-all">
+                     <div className="flex items-start gap-3">
+                       {/* Use index + 1 for numbering, or consider adding a display order field in backend */}
+                       <span className={`flex-shrink-0 w-8 h-8 bg-gradient-to-br from-${topic.gradientFrom} to-${topic.gradientTo} rounded-full flex items-center justify-center text-white font-bold text-sm`}>
+                         {index + 1}
+                       </span>
+                       <div>
+                         <h3 className="font-medium text-gray-900 dark:text-white">{topic.title}</h3>
+                         <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                           {topic.stats}
+                         </p>
+                       </div>
+                     </div>
+                   </a>
+                 </div>
+               ))}
+             </div>
+           )}
         </div>
       </div>
 

@@ -86,24 +86,28 @@ export const SocialSection = () => {
           <div className="grid grid-cols-2 gap-4">
             <a
               href="#"
+              target="_blank"
               className="flex items-center justify-center p-4 rounded-lg bg-[#1DA1F2]/10 hover:bg-[#1DA1F2]/20 text-[#1DA1F2] transition-colors"
             >
               <Twitter className="w-6 h-6" />
             </a>
             <a
-              href="#"
+              href="https://www.facebook.com/share/18SRuQQ6sz/"
+              target="_blank"
               className="flex items-center justify-center p-4 rounded-lg bg-[#4267B2]/10 hover:bg-[#4267B2]/20 text-[#4267B2] transition-colors"
             >
               <Facebook className="w-6 h-6" />
             </a>
             <a
-              href="#"
+              href="https://www.instagram.com/escuela.lenguas.tapachula?igsh=MTVvNmtraGI3ZjN4eg=="
+              target="_blank"
               className="flex items-center justify-center p-4 rounded-lg bg-[#E4405F]/10 hover:bg-[#E4405F]/20 text-[#E4405F] transition-colors"
             >
               <Instagram className="w-6 h-6" />
             </a>
             <a
               href="#"
+              target="_blank"
               className="flex items-center justify-center p-4 rounded-lg bg-[#FF0000]/10 hover:bg-[#FF0000]/20 text-[#FF0000] transition-colors"
             >
               <Youtube className="w-6 h-6" />

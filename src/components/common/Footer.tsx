@@ -2,7 +2,7 @@ import { ArrowRight } from 'lucide-react';
 
 export const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300">
+    <footer className="text-gray-900" style={{ backgroundColor: '#D4B012' }}>
       {/* Franja superior con degradado */}
       <div className="h-2 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"></div>
       
@@ -11,8 +11,8 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo y descripción */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-white">Facultad de Lenguas</h3>
-            <p className="text-gray-400">
+            <h3 className="text-2xl font-bold text-black">Facultad de Lenguas</h3>
+            <p className="text-gray-800">
               Formando profesionales en lenguas y comunicación intercultural desde 1985.
             </p>
             <div className="pt-2">
@@ -25,7 +25,7 @@ export const Footer = () => {
 
           {/* Enlaces rápidos */}
           <div>
-            <h4 className="text-lg font-semibold text-white mb-4">Enlaces Rápidos</h4>
+            <h4 className="text-lg font-semibold text-black">Enlaces Rápidos</h4>
             <ul className="space-y-2">
               {[
                 'Programas Académicos',
@@ -37,7 +37,7 @@ export const Footer = () => {
                 <li key={item}>
                   <a
                     href="#"
-                    className="text-gray-400 hover:text-white transition-colors inline-flex items-center group"
+                    className="text-gray-800 hover:text-black transition-colors inline-flex items-center group"
                   >
                     <span className="h-[2px] w-0 bg-blue-500 transition-all duration-300 group-hover:w-4 mr-0 group-hover:mr-2" />
                     {item}
@@ -49,12 +49,12 @@ export const Footer = () => {
 
           {/* Información de contacto */}
           <div>
-            <h4 className="text-lg font-semibold text-white mb-4">Contacto</h4>
+            <h4 className="text-lg font-semibold text-black">Contacto</h4>
             <ul className="space-y-3">
               <li className="flex items-start space-x-3 group">
                 <div className="mt-1">
                   <svg
-                    className="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"
+                    className="w-5 h-5 text-gray-800 group-hover:text-blue-600 transition-colors"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -74,10 +74,10 @@ export const Footer = () => {
                   </svg>
                 </div>
                 <div className="flex-1">
-                  <p className="text-gray-400 group-hover:text-white transition-colors">
+                  <p className="text-gray-800 group-hover:text-black transition-colors">
                     Blvd. Belisario Domínguez km. 1081
                   </p>
-                  <p className="text-gray-400 group-hover:text-white transition-colors">
+                  <p className="text-gray-800 group-hover:text-black transition-colors">
                     Tuxtla Gutiérrez, Chiapas
                   </p>
                 </div>
@@ -85,7 +85,7 @@ export const Footer = () => {
               <li className="flex items-start space-x-3 group">
                 <div className="mt-1">
                   <svg
-                    className="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"
+                    className="w-5 h-5 text-gray-800 group-hover:text-blue-600 transition-colors"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -98,14 +98,14 @@ export const Footer = () => {
                     />
                   </svg>
                 </div>
-                <a href="mailto:lenguas@unach.mx" className="text-gray-400 group-hover:text-white transition-colors">
+                <a href="mailto:lenguas@unach.mx" className="text-gray-800 group-hover:text-black transition-colors">
                   lenguas@unach.mx
                 </a>
               </li>
               <li className="flex items-start space-x-3 group">
                 <div className="mt-1">
                   <svg
-                    className="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"
+                    className="w-5 h-5 text-gray-800 group-hover:text-blue-600 transition-colors"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -118,7 +118,7 @@ export const Footer = () => {
                     />
                   </svg>
                 </div>
-                <a href="tel:+529616150440" className="text-gray-400 group-hover:text-white transition-colors">
+                <a href="tel:+529616150440" className="text-gray-800 group-hover:text-black transition-colors">
                   (961) 615 0440
                 </a>
               </li>
@@ -127,8 +127,8 @@ export const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <h4 className="text-lg font-semibold text-white mb-4">Boletín Informativo</h4>
-            <p className="text-gray-400 mb-4">
+            <h4 className="text-lg font-semibold text-black">Boletín Informativo</h4>
+            <p className="text-gray-800 mb-4">
               Suscríbete para recibir las últimas noticias y actualizaciones.
             </p>
             <form className="space-y-3">
@@ -136,7 +136,7 @@ export const Footer = () => {
                 <input
                   type="email"
                   placeholder="Tu correo electrónico"
-                  className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                  className="w-full px-4 py-2 bg-gray-200 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder-gray-600"
                 />
                 <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-20 transition-opacity" />
               </div>
@@ -152,17 +152,17 @@ export const Footer = () => {
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-sm text-gray-400">
+            <div className="text-sm text-gray-800">
               &copy; {new Date().getFullYear()} Facultad de Lenguas UNACH. Todos los derechos reservados.
             </div>
             <div className="flex space-x-6">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-gray-800 hover:text-black transition-colors">
                 Política de Privacidad
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-gray-800 hover:text-black transition-colors">
                 Términos de Uso
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-gray-800 hover:text-black transition-colors">
                 Mapa del Sitio
               </a>
             </div>

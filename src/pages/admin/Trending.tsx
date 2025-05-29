@@ -2,13 +2,13 @@ import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { useEffect } from 'react';
 
-// Define interface for trending topic data matching backend schema
+// Define interface for trending topic data matching backend schema (using hex color strings)
 interface AdminTrendingItem {
   _id?: string; // Optional _id for existing items
   title: string;
   stats: string;
-  gradientFrom: string; // Store gradient start color name (e.g., "pink-500")
-  gradientTo: string;   // Store gradient end color name (e.g., "violet-500")
+  gradientFrom: string; // Store hex color string (e.g., "#RRGGBB")
+  gradientTo: string;   // Store hex color string (e.g., "#RRGGBB")
   createdAt?: string; // Add createdAt as optional from backend
 }
 
@@ -18,8 +18,8 @@ export const AdminTrending = () => {
   const [newTrendingTopic, setNewTrendingTopic] = useState<AdminTrendingItem>({
     title: '',
     stats: '',
-    gradientFrom: '',
-    gradientTo: '',
+    gradientFrom: '#ffffff', // Initialize with a default hex color
+    gradientTo: '#000000',   // Initialize with a default hex color
   });
   // State to hold the list of trending topics fetched from backend
   const [trendingTopics, setTrendingTopics] = useState<AdminTrendingItem[]>([]);
@@ -91,8 +91,8 @@ export const AdminTrending = () => {
         setNewTrendingTopic({
           title: '',
           stats: '',
-          gradientFrom: '',
-          gradientTo: '',
+          gradientFrom: '#ffffff', // Reset with default hex color
+          gradientTo: '#000000',   // Reset with default hex color
         });
       }
     } catch (error) {
@@ -156,29 +156,27 @@ export const AdminTrending = () => {
                 />
               </div>
                <div>
-                <label htmlFor="gradientFrom" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Color Gradiente Inicio (Tailwind class)</label>
+                <label htmlFor="gradientFrom" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Color Gradiente Inicio</label>
                 <input
-                  type="text"
+                  type="color"
                   name="gradientFrom"
                   id="gradientFrom"
                   value={newTrendingTopic.gradientFrom}
                   onChange={handleInputChange}
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                  placeholder="Ej: pink-500"
+                  className="mt-1 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 />
               </div>
               <div>
-                <label htmlFor="gradientTo" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Color Gradiente Fin (Tailwind class)</label>
+                <label htmlFor="gradientTo" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Color Gradiente Fin</label>
                 <input
-                  type="text"
+                  type="color"
                   name="gradientTo"
                   id="gradientTo"
                   value={newTrendingTopic.gradientTo}
                   onChange={handleInputChange}
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                  placeholder="Ej: violet-500"
+                  className="mt-1 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 />
               </div>
               <div className="mt-6 flex justify-end space-x-3">
@@ -219,7 +217,7 @@ export const AdminTrending = () => {
                       Estadísticas: {topic.stats}
                     </p>
                     <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                       Gradiente: from-{topic.gradientFrom} to-{topic.gradientTo}
+                       Gradiente: {topic.gradientFrom} to {topic.gradientTo}
                     </p>
                     <p className="mt-1 text-xs text-gray-500 dark:text-gray-500">
                        Creado: {topic.createdAt ? new Date(topic.createdAt).toLocaleString() : 'N/A'}

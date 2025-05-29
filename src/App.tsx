@@ -14,6 +14,7 @@ import { AdminEvents } from './pages/admin/Events'
 import { AdminBulletins } from './pages/admin/Bulletins'
 import { AdminGallery } from './pages/admin/Gallery'
 import { AdminSettings } from './pages/admin/Settings'
+import { AdminTrending } from './pages/admin/Trending'
 
 function App() {
   return (
@@ -66,6 +67,7 @@ function App() {
               <Route path="boletines" element={<AdminBulletins />} />
               <Route path="galeria" element={<AdminGallery />} />
               <Route path="configuracion" element={<AdminSettings />} />
+              <Route path="trending" element={<AdminTrending />} />
             </Route>
             <Route
               path="/login"

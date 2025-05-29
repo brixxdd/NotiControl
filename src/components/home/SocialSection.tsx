@@ -63,12 +63,17 @@ export const SocialSection = () => {
              <div className="space-y-4">
                {trendingTopics.map((topic, index) => (
                  <div key={topic._id} className="relative group">
-                   {/* Use gradientFrom and gradientTo from fetched data */}
-                   <div className={`absolute -inset-0.5 bg-gradient-to-r from-${topic.gradientFrom} to-${topic.gradientTo} rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200`} />
+                   {/* Use gradientFrom and gradientTo from fetched data with inline styles */}
+                   <div 
+                     className="absolute -inset-0.5 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"
+                     style={{ backgroundImage: `linear-gradient(to right, ${topic.gradientFrom}, ${topic.gradientTo})` }}
+                   />
                    <a href="#" className="relative block p-4 bg-white dark:bg-gray-900 rounded-lg hover:transform hover:scale-[1.01] transition-all">
                      <div className="flex items-start gap-3">
                        {/* Use index + 1 for numbering, or consider adding a display order field in backend */}
-                       <span className={`flex-shrink-0 w-8 h-8 bg-gradient-to-br from-${topic.gradientFrom} to-${topic.gradientTo} rounded-full flex items-center justify-center text-white font-bold text-sm`}>
+                       <span className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm`}
+                         style={{ backgroundImage: `linear-gradient(to bottom right, ${topic.gradientFrom}, ${topic.gradientTo})` }}
+                       >
                          {index + 1}
                        </span>
                        <div>

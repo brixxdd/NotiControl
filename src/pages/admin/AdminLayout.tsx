@@ -16,6 +16,7 @@ export default function AdminLayout() {
     if (location.pathname.includes('/admin/boletines')) return 'bulletins'
     if (location.pathname.includes('/admin/galeria')) return 'gallery'
     if (location.pathname.includes('/admin/configuracion')) return 'settings'
+    if (location.pathname.includes('/admin/trending')) return 'trending'
     return 'dashboard' // Default to dashboard
   }
 
@@ -33,6 +34,8 @@ export default function AdminLayout() {
         return 'Galería de Imágenes';
       case 'settings':
         return 'Configuración';
+      case 'trending':
+        return 'Trending';
       default:
         return 'Panel de administración';
     }
@@ -57,6 +60,9 @@ export default function AdminLayout() {
         break
       case 'settings':
         navigate('/admin/configuracion')
+        break
+      case 'trending':
+        navigate('/admin/trending')
         break
       default:
         navigate('/admin')

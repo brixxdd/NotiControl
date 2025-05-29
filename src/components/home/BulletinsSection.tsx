@@ -34,9 +34,8 @@ export const BulletinsSection = ({ bulletins, loading }: BulletinsSectionProps) 
         ) : (
           <div className="space-y-4">
             {bulletins.map((bulletin) => (
-              <a
-                key={bulletin._id} // Use _id as key
-                href="#" // Replace with actual link to bulletin detail if available
+              <div
+                key={bulletin._id}
                 className="block p-4 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors group"
               >
                 <h3 className="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
@@ -55,7 +54,7 @@ export const BulletinsSection = ({ bulletins, loading }: BulletinsSectionProps) 
                      Imagen: {bulletin.image}
                   </p>
                 )}
-              </a>
+              </div>
             ))}
           </div>
         )}

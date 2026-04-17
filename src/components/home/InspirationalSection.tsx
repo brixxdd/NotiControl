@@ -34,7 +34,7 @@ export const InspirationalSection = () => {
                 <br />
                 <span
                   className="bg-clip-text text-transparent"
-                  style={{ backgroundImage: 'linear-gradient(135deg, var(--ios-blue), var(--ios-purple))' }}
+                  style={{ backgroundImage: 'linear-gradient(135deg, var(--ios-blue), var(--ios-yellow))' }}
                 >
                   de los negocios.
                 </span>
@@ -91,7 +91,7 @@ export const InspirationalSection = () => {
             <div className="ios-card p-8">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-2xl flex items-center justify-center"
-                  style={{ background: 'linear-gradient(135deg, var(--ios-blue), var(--ios-purple))' }}>
+                  style={{ background: 'linear-gradient(135deg, var(--ios-blue), var(--ios-yellow))' }}>
                   <Target className="w-5 h-5 text-white" />
                 </div>
                 <h3 className="ios-title text-[color:var(--ios-label)]">Misión</h3>
@@ -108,7 +108,7 @@ export const InspirationalSection = () => {
             <div className="ios-card p-8">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-2xl flex items-center justify-center"
-                  style={{ background: 'linear-gradient(135deg, var(--ios-purple), var(--ios-pink, #ff375f))' }}>
+                  style={{ background: 'linear-gradient(135deg, var(--ios-purple), var(--ios-yellow))' }}>
                   <Eye className="w-5 h-5 text-white" />
                 </div>
                 <h3 className="ios-title text-[color:var(--ios-label)]">Visión</h3>

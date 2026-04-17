@@ -25,7 +25,7 @@ const SOCIALS = [
     color: '#4267B2',
   },
   {
-    href: 'https://www.instagram.com/escuela.lenguas.tapachula?igsh=MTVvNmtraGI3ZjN4eg==',
+    href: '#',
     label: 'Instagram',
     Icon: Instagram,
     color: '#E4405F',

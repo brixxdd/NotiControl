@@ -27,10 +27,11 @@
   --ios-fill: rgba(120, 120, 128, 0.12);
   --ios-fill-hover: rgba(120, 120, 128, 0.2);
 
-  /* iOS Accent */
-  --ios-blue: #007aff;
-  --ios-indigo: #5856d6;
-  --ios-purple: #af52de;
+  /* UNACH Brand Colors */
+  --ios-blue: #192D63;
+  --ios-indigo: #192D63;
+  --ios-purple: #735920;
+  --ios-gold: #735920;
   --ios-pink: #ff2d55;
   --ios-red: #ff3b30;
   --ios-orange: #ff9500;
@@ -77,9 +78,10 @@
   --ios-fill: rgba(120, 120, 128, 0.24);
   --ios-fill-hover: rgba(120, 120, 128, 0.36);
 
-  --ios-blue: #0a84ff;
-  --ios-indigo: #5e5ce6;
-  --ios-purple: #bf5af2;
+  --ios-blue: #4a72c4;
+  --ios-indigo: #4a72c4;
+  --ios-purple: #c9a84c;
+  --ios-gold: #c9a84c;
   --ios-pink: #ff375f;
   --ios-red: #ff453a;
   --ios-orange: #ff9f0a;

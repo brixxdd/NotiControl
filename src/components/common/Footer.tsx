@@ -23,11 +23,11 @@ export const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-1">
             <h3 className="text-[22px] font-bold tracking-tight text-[color:var(--ios-label)] mb-2">
-              Facultad de Lenguas
+              Facultad de Negocios Campus IV
             </h3>
             <p className="text-[14px] leading-relaxed text-[color:var(--ios-label-secondary)] mb-5 max-w-xs">
-              Formando profesionales en lenguas y comunicación intercultural
-              desde 1985.
+              Formando profesionistas de alto nivel en contaduría y sistemas para
+              el desarrollo económico y social de la frontera sur.
             </p>
             <button className="ios-btn">
               Contactar
@@ -64,27 +64,30 @@ export const Footer = () => {
               <li className="flex items-start gap-2.5 text-[14px] text-[color:var(--ios-label-secondary)]">
                 <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--ios-blue)]" />
                 <span>
-                  Blvd. Belisario Domínguez km. 1081
+                  Carretera a Puerto Madero km. 1.5 s/n
                   <br />
-                  Tuxtla Gutiérrez, Chiapas
+                  Tapachula, Chiapas. México. C.P. 30700
+                </span>
+              </li>
+              <li className="flex flex-col gap-1">
+                <a
+                  href="tel:+529626251723"
+                  className="flex items-center gap-2.5 text-[14px] text-[color:var(--ios-label-secondary)] hover:text-[var(--ios-blue)] transition-colors"
+                >
+                  <Phone className="w-4 h-4 flex-shrink-0 text-[var(--ios-blue)]" />
+                  (962) 62 51723, 62 51166
+                </a>
+                <span className="flex items-center gap-2.5 text-[14px] text-[color:var(--ios-label-secondary)] pl-6">
+                  Internacional: ext. 113
                 </span>
               </li>
               <li>
                 <a
-                  href="mailto:lenguas@unach.mx"
+                  href="mailto:direcfneg@unach.mx"
                   className="flex items-center gap-2.5 text-[14px] text-[color:var(--ios-label-secondary)] hover:text-[var(--ios-blue)] transition-colors"
                 >
                   <Mail className="w-4 h-4 flex-shrink-0 text-[var(--ios-blue)]" />
-                  lenguas@unach.mx
-                </a>
-              </li>
-              <li>
-                <a
-                  href="tel:+529616150440"
-                  className="flex items-center gap-2.5 text-[14px] text-[color:var(--ios-label-secondary)] hover:text-[var(--ios-blue)] transition-colors"
-                >
-                  <Phone className="w-4 h-4 flex-shrink-0 text-[var(--ios-blue)]" />
-                  (961) 615 0440
+                  direcfneg@unach.mx
                 </a>
               </li>
             </ul>
@@ -133,7 +136,7 @@ export const Footer = () => {
         {/* Bottom bar */}
         <div className="mt-14 pt-6 border-t border-[var(--ios-separator)] flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[12.5px] text-[color:var(--ios-label-tertiary)]">
-            © {new Date().getFullYear()} Facultad de Lenguas UNACH. Todos los
+            © {new Date().getFullYear()} Facultad de Negocios Campus IV UNACH. Todos los
             derechos reservados.
           </p>
           <div className="flex items-center gap-5">

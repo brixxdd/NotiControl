@@ -65,7 +65,7 @@ export const News = () => {
           <span className="ios-pill mb-3">Sala de prensa</span>
           <h1 className="ios-large-title text-[color:var(--ios-label)] mb-2">Noticias</h1>
           <p className="text-[16px] text-[color:var(--ios-label-secondary)] mb-6 max-w-xl">
-            Últimas novedades de la Facultad de Lenguas UNACH.
+            Últimas novedades de la Facultad de Negocios Campus IV UNACH.
           </p>
 
           {/* Search */}

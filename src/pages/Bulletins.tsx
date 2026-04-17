@@ -54,7 +54,7 @@ export const Bulletins = () => {
           <span className="ios-pill mb-3">Documentos oficiales</span>
           <h1 className="ios-large-title text-[color:var(--ios-label)] mb-2">Boletines</h1>
           <p className="text-[16px] text-[color:var(--ios-label-secondary)] mb-6 max-w-xl">
-            Comunicados y boletines oficiales de la Facultad de Lenguas UNACH.
+            Comunicados y boletines oficiales de la Facultad de Negocios Campus IV UNACH.
           </p>
           <div className="relative max-w-sm">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[color:var(--ios-label-tertiary)]" />

@@ -62,7 +62,7 @@ export const Navbar = () => {
                   />
                 </div>
                 <span className="hidden sm:block text-[15px] font-semibold tracking-tight text-[color:var(--ios-label)]">
-                  Lenguas UNACH
+                  Negocios UNACH
                 </span>
               </Link>
 

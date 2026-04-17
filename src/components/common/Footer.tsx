@@ -1,45 +1,53 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Mail, MapPin, Phone } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+
+const QUICK_LINKS = [
+  'Programas Académicos',
+  'Admisiones',
+  'Investigación',
+  'Biblioteca',
+  'Campus Virtual',
+];
+
+const LEGAL = [
+  { label: 'Privacidad', href: '#' },
+  { label: 'Términos', href: '#' },
+  { label: 'Mapa del sitio', href: '#' },
+];
 
 export const Footer = () => {
   return (
-    <footer className="text-gray-900" style={{ backgroundColor: '#D4B012' }}>
-      {/* Franja superior con degradado */}
-      <div className="h-2 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"></div>
-      
-      {/* Contenido principal del footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Logo y descripción */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-black">Facultad de Lenguas</h3>
-            <p className="text-gray-800">
-              Formando profesionales en lenguas y comunicación intercultural desde 1985.
+    <footer className="relative bg-[var(--ios-bg)] border-t border-[var(--ios-separator)] pt-16 pb-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+          {/* Brand */}
+          <div className="lg:col-span-1">
+            <h3 className="text-[22px] font-bold tracking-tight text-[color:var(--ios-label)] mb-2">
+              Facultad de Lenguas
+            </h3>
+            <p className="text-[14px] leading-relaxed text-[color:var(--ios-label-secondary)] mb-5 max-w-xs">
+              Formando profesionales en lenguas y comunicación intercultural
+              desde 1985.
             </p>
-            <div className="pt-2">
-              <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors inline-flex items-center group">
-                Contactar
-                <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </button>
-            </div>
+            <button className="ios-btn">
+              Contactar
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
 
-          {/* Enlaces rápidos */}
+          {/* Quick links */}
           <div>
-            <h4 className="text-lg font-semibold text-black">Enlaces Rápidos</h4>
-            <ul className="space-y-2">
-              {[
-                'Programas Académicos',
-                'Admisiones',
-                'Investigación',
-                'Biblioteca',
-                'Campus Virtual',
-              ].map((item) => (
+            <h4 className="text-[13px] font-semibold uppercase tracking-wider text-[color:var(--ios-label-tertiary)] mb-4">
+              Enlaces rápidos
+            </h4>
+            <ul className="space-y-2.5">
+              {QUICK_LINKS.map((item) => (
                 <li key={item}>
                   <a
                     href="#"
-                    className="text-gray-800 hover:text-black transition-colors inline-flex items-center group"
+                    className="group inline-flex items-center gap-2 text-[14px] text-[color:var(--ios-label-secondary)] hover:text-[color:var(--ios-label)] transition-colors"
                   >
-                    <span className="h-[2px] w-0 bg-blue-500 transition-all duration-300 group-hover:w-4 mr-0 group-hover:mr-2" />
+                    <span className="w-0 h-[2px] rounded-full bg-[var(--ios-blue)] transition-all duration-300 group-hover:w-3" />
                     {item}
                   </a>
                 </li>
@@ -47,78 +55,35 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Información de contacto */}
+          {/* Contact */}
           <div>
-            <h4 className="text-lg font-semibold text-black">Contacto</h4>
+            <h4 className="text-[13px] font-semibold uppercase tracking-wider text-[color:var(--ios-label-tertiary)] mb-4">
+              Contacto
+            </h4>
             <ul className="space-y-3">
-              <li className="flex items-start space-x-3 group">
-                <div className="mt-1">
-                  <svg
-                    className="w-5 h-5 text-gray-800 group-hover:text-blue-600 transition-colors"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <p className="text-gray-800 group-hover:text-black transition-colors">
-                    Blvd. Belisario Domínguez km. 1081
-                  </p>
-                  <p className="text-gray-800 group-hover:text-black transition-colors">
-                    Tuxtla Gutiérrez, Chiapas
-                  </p>
-                </div>
+              <li className="flex items-start gap-2.5 text-[14px] text-[color:var(--ios-label-secondary)]">
+                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--ios-blue)]" />
+                <span>
+                  Blvd. Belisario Domínguez km. 1081
+                  <br />
+                  Tuxtla Gutiérrez, Chiapas
+                </span>
               </li>
-              <li className="flex items-start space-x-3 group">
-                <div className="mt-1">
-                  <svg
-                    className="w-5 h-5 text-gray-800 group-hover:text-blue-600 transition-colors"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
-                  </svg>
-                </div>
-                <a href="mailto:lenguas@unach.mx" className="text-gray-800 group-hover:text-black transition-colors">
+              <li>
+                <a
+                  href="mailto:lenguas@unach.mx"
+                  className="flex items-center gap-2.5 text-[14px] text-[color:var(--ios-label-secondary)] hover:text-[var(--ios-blue)] transition-colors"
+                >
+                  <Mail className="w-4 h-4 flex-shrink-0 text-[var(--ios-blue)]" />
                   lenguas@unach.mx
                 </a>
               </li>
-              <li className="flex items-start space-x-3 group">
-                <div className="mt-1">
-                  <svg
-                    className="w-5 h-5 text-gray-800 group-hover:text-blue-600 transition-colors"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                    />
-                  </svg>
-                </div>
-                <a href="tel:+529616150440" className="text-gray-800 group-hover:text-black transition-colors">
+              <li>
+                <a
+                  href="tel:+529616150440"
+                  className="flex items-center gap-2.5 text-[14px] text-[color:var(--ios-label-secondary)] hover:text-[var(--ios-blue)] transition-colors"
+                >
+                  <Phone className="w-4 h-4 flex-shrink-0 text-[var(--ios-blue)]" />
                   (961) 615 0440
                 </a>
               </li>
@@ -127,45 +92,60 @@ export const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <h4 className="text-lg font-semibold text-black">Boletín Informativo</h4>
-            <p className="text-gray-800 mb-4">
-              Suscríbete para recibir las últimas noticias y actualizaciones.
+            <h4 className="text-[13px] font-semibold uppercase tracking-wider text-[color:var(--ios-label-tertiary)] mb-4">
+              Boletín
+            </h4>
+            <p className="text-[14px] text-[color:var(--ios-label-secondary)] mb-4">
+              Recibe novedades en tu correo.
             </p>
-            <form className="space-y-3">
-              <div className="relative group">
-                <input
-                  type="email"
-                  placeholder="Tu correo electrónico"
-                  className="w-full px-4 py-2 bg-gray-200 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder-gray-600"
-                />
-                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-20 transition-opacity" />
-              </div>
-              <button className="w-full px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg transition-all transform hover:scale-[1.02] active:scale-[0.98]">
-                Suscribirse
+            <form
+              className="flex items-center gap-2"
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <input
+                type="email"
+                placeholder="tu@correo.com"
+                className="flex-1 min-w-0 px-4 py-2.5 rounded-full bg-[var(--ios-fill)] text-[14px] text-[color:var(--ios-label)] placeholder-[color:var(--ios-label-tertiary)] border border-transparent focus:border-[var(--ios-blue)] focus:outline-none transition-all"
+              />
+              <button
+                type="submit"
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--ios-blue)] text-white transition-all duration-300 active:scale-90 hover:brightness-110"
+                aria-label="Suscribirse"
+              >
+                <ArrowRight className="w-4 h-4" />
               </button>
             </form>
+
+            <div className="flex items-center gap-2 mt-6">
+              {[Twitter, Facebook, Instagram, Youtube].map((Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="w-9 h-9 rounded-full flex items-center justify-center bg-[var(--ios-fill)] hover:bg-[var(--ios-fill-hover)] text-[color:var(--ios-label-secondary)] hover:text-[color:var(--ios-label)] transition-all active:scale-90"
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Subfooter */}
-      <div className="border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-sm text-gray-800">
-              &copy; {new Date().getFullYear()} Facultad de Lenguas UNACH. Todos los derechos reservados.
-            </div>
-            <div className="flex space-x-6">
-              <a href="#" className="text-gray-800 hover:text-black transition-colors">
-                Política de Privacidad
+        {/* Bottom bar */}
+        <div className="mt-14 pt-6 border-t border-[var(--ios-separator)] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-[12.5px] text-[color:var(--ios-label-tertiary)]">
+            © {new Date().getFullYear()} Facultad de Lenguas UNACH. Todos los
+            derechos reservados.
+          </p>
+          <div className="flex items-center gap-5">
+            {LEGAL.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                className="text-[12.5px] text-[color:var(--ios-label-tertiary)] hover:text-[color:var(--ios-label)] transition-colors"
+              >
+                {l.label}
               </a>
-              <a href="#" className="text-gray-800 hover:text-black transition-colors">
-                Términos de Uso
-              </a>
-              <a href="#" className="text-gray-800 hover:text-black transition-colors">
-                Mapa del Sitio
-              </a>
-            </div>
+            ))}
           </div>
         </div>
       </div>

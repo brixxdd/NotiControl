@@ -1,97 +1,168 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ThemeToggle } from './ThemeToggle'
+
+const NAV_LINKS = [
+  { to: '/', label: 'Inicio' },
+  { to: '/noticias', label: 'Noticias' },
+  { to: '/boletines', label: 'Boletines' },
+]
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [hidden, setHidden] = useState(false)
+  const [elevated, setElevated] = useState(false)
+  const lastY = useRef(0)
+  const location = useLocation()
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
+      const y = window.scrollY
+      setElevated(y > 8)
+      // hide on scroll down, show on scroll up
+      if (y > 120 && y > lastY.current) setHidden(true)
+      else setHidden(false)
+      lastY.current = y
     }
-
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    setIsMenuOpen(false)
+  }, [location.pathname])
+
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 shadow-md`}
-      style={{ backgroundColor: '#192D63' }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo UNACH */}
-          <Link to="/" className="flex items-center space-x-2">
-            <img
-              src="/logo unach.png"
-              alt="Logo UNACH"
-              className="h-10 w-auto object-contain"
-            />
-          </Link>
+    <>
+      <nav
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-500`}
+        style={{
+          transform: hidden ? 'translateY(-100%)' : 'translateY(0)',
+          transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        }}
+      >
+        <div
+          className={`ios-glass transition-all duration-300 ${
+            elevated ? 'shadow-[0_2px_20px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_20px_rgba(0,0,0,0.3)]' : ''
+          }`}
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-14">
+              <Link
+                to="/"
+                className="flex items-center gap-2 group"
+                aria-label="Inicio"
+              >
+                <div className="w-9 h-9 rounded-xl bg-white/80 dark:bg-white/10 flex items-center justify-center shadow-sm overflow-hidden transition-transform duration-300 group-hover:scale-105 group-active:scale-95">
+                  <img
+                    src="/logo unach.png"
+                    alt="UNACH"
+                    className="h-7 w-auto object-contain"
+                  />
+                </div>
+                <span className="hidden sm:block text-[15px] font-semibold tracking-tight text-[color:var(--ios-label)]">
+                  Lenguas UNACH
+                </span>
+              </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex space-x-4 items-center">
-            <Link
-              to="/"
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 text-white hover:bg-white/10 hover:text-white`}
-            >
-              Inicio
-            </Link>
-            <Link
-              to="/noticias"
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 text-white hover:bg-white/10 hover:text-white`}
-            >
-              Noticias
-            </Link>
-            <Link
-              to="/boletines"
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 text-white hover:bg-white/10 hover:text-white`}
-            >
-              Boletines
-            </Link>
+              <div className="hidden lg:flex items-center gap-1">
+                {NAV_LINKS.map((link) => {
+                  const active = location.pathname === link.to
+                  return (
+                    <Link
+                      key={link.to}
+                      to={link.to}
+                      className={`relative px-4 py-2 rounded-full text-[14px] font-medium transition-all duration-300 ${
+                        active
+                          ? 'text-[color:var(--ios-label)]'
+                          : 'text-[color:var(--ios-label-secondary)] hover:text-[color:var(--ios-label)]'
+                      }`}
+                    >
+                      {active && (
+                        <span
+                          className="absolute inset-0 rounded-full bg-[var(--ios-fill)]"
+                          aria-hidden
+                        />
+                      )}
+                      <span className="relative">{link.label}</span>
+                    </Link>
+                  )
+                })}
+              </div>
+
+              <div className="flex items-center gap-2">
+                <ThemeToggle />
+                <Link
+                  to="/admin"
+                  className="hidden sm:inline-flex items-center px-4 py-2 rounded-full bg-[var(--ios-blue)] text-white text-[14px] font-semibold transition-all duration-300 hover:brightness-110 active:scale-95 shadow-[0_4px_14px_-2px_color-mix(in_oklab,var(--ios-blue)_45%,transparent)]"
+                >
+                  Admin
+                </Link>
+                <button
+                  onClick={() => setIsMenuOpen((v) => !v)}
+                  className="lg:hidden w-10 h-10 rounded-full flex items-center justify-center transition-all hover:bg-[var(--ios-fill)] active:scale-90"
+                  aria-label="Menú"
+                  aria-expanded={isMenuOpen}
+                >
+                  <div className="relative w-5 h-5">
+                    <Menu
+                      className={`absolute inset-0 w-5 h-5 text-[color:var(--ios-label)] transition-all duration-300 ${
+                        isMenuOpen ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'
+                      }`}
+                    />
+                    <X
+                      className={`absolute inset-0 w-5 h-5 text-[color:var(--ios-label)] transition-all duration-300 ${
+                        isMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'
+                      }`}
+                    />
+                  </div>
+                </button>
+              </div>
+            </div>
           </div>
+        </div>
 
-          {/* Right Side */}
-          <div className="flex items-center space-x-4">
-            <ThemeToggle />
+        {/* Mobile menu */}
+        <div
+          className={`lg:hidden overflow-hidden transition-[max-height,opacity] duration-500 ${
+            isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          }`}
+          style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+        >
+          <div className="ios-glass border-t border-[var(--nav-border)] px-4 py-3 space-y-1">
+            {NAV_LINKS.map((link, i) => {
+              const active = location.pathname === link.to
+              return (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className={`block px-4 py-3 rounded-2xl text-[15px] font-medium transition-all ${
+                    active
+                      ? 'bg-[var(--ios-fill)] text-[color:var(--ios-label)]'
+                      : 'text-[color:var(--ios-label-secondary)] hover:bg-[var(--ios-fill)] hover:text-[color:var(--ios-label)]'
+                  }`}
+                  style={{
+                    animation: isMenuOpen
+                      ? `ios-reveal 500ms ${i * 40}ms var(--ease-out-quart) both`
+                      : undefined,
+                  }}
+                >
+                  {link.label}
+                </Link>
+              )
+            })}
             <Link
               to="/admin"
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 shadow`}
+              className="block px-4 py-3 rounded-2xl text-[15px] font-semibold bg-[var(--ios-blue)] text-white text-center"
             >
               Admin
             </Link>
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`lg:hidden p-2 rounded-md transition-colors text-white hover:bg-white/10`}
-            >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
           </div>
         </div>
-      </div>
-
-      {/* Mobile Nav */}
-      <div className={`lg:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
-        <div
-          className={`px-4 pt-2 pb-4 space-y-1 bg-black/50 backdrop-blur-sm`}
-        >
-          {['/', '/noticias', '/boletines'].map((path, idx) => {
-            const names = ['Inicio', 'Noticias', 'Boletines']
-            return (
-              <Link
-                key={path}
-                to={path}
-                className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-200 text-gray-100 hover:text-white hover:bg-white/10`}
-              >
-                {names[idx]}
-              </Link>
-            )
-          })}
-        </div>
-      </div>
-    </nav>
+      </nav>
+      {/* Spacer — navbar is fixed */}
+      <div className="h-14" aria-hidden />
+    </>
   )
 }

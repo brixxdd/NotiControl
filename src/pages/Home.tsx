@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'; // Import useEffect
+import { useState, useEffect } from 'react';
 import { News } from '../types';
 import { FeaturedNewsCarousel } from '../components/home/FeaturedNewsCarousel';
 import { InspirationalSection } from '../components/home/InspirationalSection';
@@ -7,182 +7,166 @@ import { EventsSection } from '../components/home/EventsSection';
 import { SocialSection } from '../components/home/SocialSection';
 import { BulletinsSection } from '../components/home/BulletinsSection';
 
-// Define a type that includes the MongoDB _id, similar to AdminNews
 interface NewsItemWithId extends News {
-  _id?: string; // MongoDB uses _id
+  _id?: string;
 }
 
-// Define a type for featured news items for the carousel (can be a subset of NewsItemWithId)
-interface FeaturedNewsItem extends Pick<NewsItemWithId, '_id' | 'id' | 'title' | 'content' | 'imageUrl' | 'category' | 'createdAt'> {
-    featured: boolean; // Explicitly indicate it's featured
+interface FeaturedNewsItem
+  extends Pick<NewsItemWithId, '_id' | 'id' | 'title' | 'content' | 'imageUrl' | 'category' | 'createdAt'> {
+  featured: boolean;
 }
 
-// Define interface for Event data matching backend schema (should match backend/models/Event.js)
-// Re-using a similar interface name for clarity in Home.tsx context
 interface HomeEventItem {
-  _id: string; // MongoDB _id
+  _id: string;
   title: string;
-  date: string; // Backend might return date as string
+  date: string;
   time: string;
   location: string;
-  category?: string; // Optional category
-  createdAt: string; // Date string from backend
+  category?: string;
+  createdAt: string;
 }
 
-// Define interface for Bulletin data matching backend schema (should match backend/models/Bulletin.js)
 interface HomeBulletinItem {
-  _id: string; // MongoDB _id
-  folio: string; // Add folio
+  _id: string;
+  folio: string;
   title: string;
-  // description: string; // Remove description
-  date: string; // Backend might return date as string
-  pdf?: string; // Add optional pdf URL
-  image?: string; // Add optional image URL
-  createdAt: string; // Date string from backend
+  date: string;
+  pdf?: string;
+  image?: string;
+  createdAt: string;
 }
+
+const NewsSkeleton = () => (
+  <div className="ios-card p-6 sm:p-8 space-y-4">
+    <div className="ios-skeleton h-6 w-40" />
+    {[0, 1, 2].map((i) => (
+      <div key={i} className="flex gap-4 pt-2">
+        <div className="ios-skeleton w-28 h-28 rounded-2xl" />
+        <div className="flex-1 space-y-2">
+          <div className="ios-skeleton h-4 w-20 rounded-full" />
+          <div className="ios-skeleton h-5 w-full" />
+          <div className="ios-skeleton h-3 w-2/3" />
+        </div>
+      </div>
+    ))}
+  </div>
+);
 
 export const Home = () => {
-  // State to hold all news fetched from backend (for NewsSection)
   const [news, setNews] = useState<NewsItemWithId[]>([]);
-  // State to hold loading status for main news section
   const [loading, setLoading] = useState(true);
 
-  // State to hold hardcoded featured news for the carousel
-  const [featuredNews, setFeaturedNews] = useState<FeaturedNewsItem[]>([
-      {
-        id: "1",
-         _id: "local-1",
-        title: "Innovación en la Educación a Distancia",
-        content: "Descubre nuestras nuevas plataformas y metodologías para el aprendizaje en línea...",
-        imageUrl: "https://elmontonero.pe/upload/uploads_images/editorial_educacion_52.jpg",
-        category: "académico",
-        createdAt: new Date("2025-04-25"),
-        featured: true,
-      },
-      {
-        id: "2",
-         _id: "local-2",
-        title: "Charla Magistral: El Futuro de la IA",
-        content: "Expertos internacionales compartirán sus visiones sobre los avances y desafíos de la Inteligencia Artificial...",
-        imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        category: "evento",
-        createdAt: new Date("2025-04-26"),
-        featured: true,
-      },
-      {
-        id: "3",
-         _id: "local-3",
-        title: "Nueva Biblioteca Digital Disponible",
-        content: "Accede a miles de recursos y libros electrónicos desde cualquier lugar con tu cuenta universitaria...",
-        imageUrl: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1590&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        category: "institucional",
-        createdAt: new Date("2025-04-27"),
-        featured: true,
-      },
+  const [featuredNews] = useState<FeaturedNewsItem[]>([
+    {
+      id: '1',
+      _id: 'local-1',
+      title: 'Innovación en la Educación a Distancia',
+      content:
+        'Descubre nuestras nuevas plataformas y metodologías para el aprendizaje en línea, diseñadas para acercar a estudiantes y docentes en cualquier momento y lugar.',
+      imageUrl: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=1471&auto=format&fit=crop',
+      category: 'Académico',
+      createdAt: new Date('2025-04-25'),
+      featured: true,
+    },
+    {
+      id: '2',
+      _id: 'local-2',
+      title: 'Charla Magistral: El Futuro de la IA',
+      content:
+        'Expertos internacionales compartirán sus visiones sobre los avances y desafíos de la Inteligencia Artificial en la educación moderna.',
+      imageUrl:
+        'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1470&auto=format&fit=crop',
+      category: 'Evento',
+      createdAt: new Date('2025-04-26'),
+      featured: true,
+    },
+    {
+      id: '3',
+      _id: 'local-3',
+      title: 'Nueva Biblioteca Digital Disponible',
+      content:
+        'Accede a miles de recursos y libros electrónicos desde cualquier lugar con tu cuenta universitaria.',
+      imageUrl:
+        'https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1590&auto=format&fit=crop',
+      category: 'Institucional',
+      createdAt: new Date('2025-04-27'),
+      featured: true,
+    },
   ]);
 
-  // Fetch all news from backend on component mount for the main NewsSection
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/news/');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: NewsItemWithId[] = await response.json();
+        const r = await fetch('http://localhost:5000/api/news/');
+        if (!r.ok) throw new Error(String(r.status));
+        const data: NewsItemWithId[] = await r.json();
         setNews(data);
-      } catch (error) {
-        console.error('Error fetching news for main section:', error);
+      } catch (e) {
+        console.error('news fetch', e);
       } finally {
         setLoading(false);
       }
     };
-
     fetchNews();
-  }, []); // This effect is specifically for the main news list
+  }, []);
 
-  // State to hold all events fetched from backend (for EventsSection)
   const [events, setEvents] = useState<HomeEventItem[]>([]);
-  // State to hold loading status for events section
   const [eventsLoading, setEventsLoading] = useState(true);
 
-  // Fetch all events from backend on component mount for the EventsSection
   useEffect(() => {
-    const fetchEvents = async () => {
+    const run = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/events');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: HomeEventItem[] = await response.json();
+        const r = await fetch('http://localhost:5000/api/events');
+        if (!r.ok) throw new Error(String(r.status));
+        const data: HomeEventItem[] = await r.json();
         setEvents(data);
-      } catch (error) {
-        console.error('Error fetching events:', error);
+      } catch (e) {
+        console.error('events fetch', e);
       } finally {
         setEventsLoading(false);
       }
     };
+    run();
+  }, []);
 
-    fetchEvents();
-  }, []); // This effect is specifically for the events list
-
-  // State to hold all bulletins fetched from backend (for BulletinsSection)
   const [bulletins, setBulletins] = useState<HomeBulletinItem[]>([]);
-  // State to hold loading status for bulletins section
   const [bulletinsLoading, setBulletinsLoading] = useState(true);
 
-  // Fetch all bulletins from backend on component mount for the BulletinsSection
   useEffect(() => {
-    const fetchBulletins = async () => {
+    const run = async () => {
       try {
         setBulletinsLoading(true);
-        const response = await fetch('http://localhost:5000/api/bulletins');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: HomeBulletinItem[] = await response.json();
-        // Sort bulletins by date, newest first (optional, adjust as needed)
-        const sortedData = data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-        setBulletins(sortedData);
-      } catch (error) {
-        console.error('Error fetching bulletins:', error);
+        const r = await fetch('http://localhost:5000/api/bulletins');
+        if (!r.ok) throw new Error(String(r.status));
+        const data: HomeBulletinItem[] = await r.json();
+        const sorted = data.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+        );
+        setBulletins(sorted);
+      } catch (e) {
+        console.error('bulletins fetch', e);
       } finally {
         setBulletinsLoading(false);
       }
     };
-
-    fetchBulletins();
-  }, []); // This effect is specifically for the bulletins list
-
-  // Note: The featuredNews state uses hardcoded data for the carousel for now.
-  // In a real app, you might filter the fetched 'news' data or have a separate API endpoint for featured news.
+    run();
+  }, []);
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      {/* Featured News Carousel - uses local hardcoded data */}
+    <main className="min-h-screen bg-[var(--ios-bg)]">
       <FeaturedNewsCarousel news={featuredNews} />
-      
+
       <InspirationalSection />
-      
-      {/* Grid de contenido principal */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Columna principal de noticias (obtenidas del backend) */}
-          <div className="lg:col-span-2 space-y-8">
-            {loading ? (
-              <p className="text-center text-gray-600 dark:text-gray-300">Cargando noticias...</p>
-            ) : (
-              // Main News Section - uses data from backend
-              <NewsSection news={news} />
-            )}
-            {/* Events Section - will need to fetch its own data */}
+
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 sm:pb-28">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="lg:col-span-2 space-y-6 lg:space-y-8">
+            {loading ? <NewsSkeleton /> : <NewsSection news={news} />}
             <EventsSection events={events} loading={eventsLoading} />
           </div>
 
-          {/* Barra lateral */}
-          <div className="space-y-8">
+          <div className="space-y-6 lg:space-y-8">
             <SocialSection />
-            {/* Bulletins Section - will need to fetch data */}
             <BulletinsSection bulletins={bulletins} loading={bulletinsLoading} />
           </div>
         </div>

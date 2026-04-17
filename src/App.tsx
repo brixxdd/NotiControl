@@ -6,6 +6,7 @@ import { News } from './pages/News'
 import { NewsDetail } from './pages/NewsDetail'
 import AdminLayout from './pages/admin/AdminLayout'
 import { Login } from './pages/Login'
+import { Bulletins } from './pages/Bulletins'
 import { ThemeProvider } from './context/ThemeContext'
 import './App.css'
 import { AdminNews } from './pages/admin/News'
@@ -20,7 +21,7 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
+        <div className="flex flex-col min-h-screen bg-[var(--ios-bg)] text-[color:var(--ios-label)] transition-colors duration-300">
           <Routes>
             {/* Rutas públicas */}
             <Route
@@ -42,6 +43,18 @@ function App() {
                   <Navbar />
                   <div className="flex-1">
                     <News />
+                  </div>
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/boletines"
+              element={
+                <>
+                  <Navbar />
+                  <div className="flex-1">
+                    <Bulletins />
                   </div>
                   <Footer />
                 </>

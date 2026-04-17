@@ -1,4 +1,4 @@
-import { Bell } from 'lucide-react';
+import { Bell, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ThemeToggle } from '../common/ThemeToggle';
 
@@ -8,31 +8,50 @@ interface AdminNavbarProps {
 
 export const AdminNavbar = ({ title = 'Panel de administración' }: AdminNavbarProps) => {
   return (
-    <header className="bg-white dark:bg-gray-800 shadow-sm">
-      <div className="flex justify-between items-center px-8 py-4">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-          {title}
-        </h1>
-        <div className="flex items-center space-x-4">
+    <header className="sticky top-0 z-40 bg-[var(--ios-bg-elev)] border-b border-[var(--ios-separator)]">
+      <div className="flex justify-between items-center px-6 h-14">
+        <div className="flex items-center gap-2">
+          <span
+            className="w-1.5 h-5 rounded-full"
+            style={{ background: 'linear-gradient(180deg, var(--ios-blue), var(--ios-yellow))' }}
+          />
+          <h1 className="text-[15px] font-semibold tracking-tight text-[color:var(--ios-label)]">
+            {title}
+          </h1>
+        </div>
+
+        <div className="flex items-center gap-1.5">
           <ThemeToggle />
-          <button 
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 relative"
+
+          <button
+            className="relative w-9 h-9 flex items-center justify-center rounded-xl hover:bg-[var(--ios-fill)] transition-colors cursor-pointer"
             aria-label="Notificaciones"
           >
-            <Bell size={20} className="text-gray-700 dark:text-gray-300" />
-            <span className="absolute top-0 right-0 w-2 h-2 bg-blue-600 rounded-full"></span>
+            <Bell size={17} className="text-[color:var(--ios-label-secondary)]" />
+            <span
+              className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full ring-2 ring-[var(--ios-bg-elev)]"
+              style={{ background: 'var(--ios-yellow)' }}
+            />
           </button>
-          <Link 
+
+          <Link
             to="/"
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium"
+            className="flex items-center gap-1.5 px-3 h-8 rounded-xl text-[12.5px] font-medium text-[color:var(--ios-label-secondary)] hover:bg-[var(--ios-fill)] hover:text-[color:var(--ios-label)] transition-colors"
           >
+            <ExternalLink size={13} />
             Ver sitio
           </Link>
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white">
+
+          <div className="flex items-center gap-2 pl-2 border-l border-[var(--ios-separator)]">
+            <div
+              className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[11px] font-bold"
+              style={{ background: 'var(--ios-blue)' }}
+            >
               A
             </div>
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Admin</span>
+            <span className="text-[13px] font-medium text-[color:var(--ios-label)] hidden sm:block">
+              Admin
+            </span>
           </div>
         </div>
       </div>

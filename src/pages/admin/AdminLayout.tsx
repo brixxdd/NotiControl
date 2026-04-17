@@ -70,7 +70,7 @@ export default function AdminLayout() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-100 dark:bg-gray-900 transition-colors duration-200"> {/* Contenedor principal */}
+    <div className="flex h-screen overflow-hidden bg-[var(--ios-bg)] transition-colors duration-200">
       <Sidebar
         isOpen={isSidebarOpen}
         activeSection={getActiveSection()}
@@ -78,18 +78,13 @@ export default function AdminLayout() {
         onSectionChange={handleSectionChange}
       />
 
-      {/* Main content area */}
       <main
-        className={`
-          flex-1 transition-all duration-300 ease-in-out overflow-y-auto {/* Added overflow-y-auto */}
-          ${isSidebarOpen ? 'ml-64' : 'ml-20'}
-        `}
+        className={`flex-1 transition-all duration-300 ease-in-out overflow-y-auto`}
+        style={{ marginLeft: isSidebarOpen ? '224px' : '60px' }}
       >
-        <AdminNavbar title={getActiveTitle()} /> {/* AdminNavbar aquí */}
-        
-        {/* Page content area with padding */}
-        <div className="p-8"> {/* Padding alrededor del contenido de la ruta */}
-           <Outlet /> {/* Aquí se renderizarán las rutas hijas (DashboardContent, AdminNews, etc.) */}
+        <AdminNavbar title={getActiveTitle()} />
+        <div className="p-6">
+          <Outlet />
         </div>
       </main>
     </div>
